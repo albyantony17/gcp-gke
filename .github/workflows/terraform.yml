@@ -1,0 +1,48 @@
+name: 'Terraform Plan and Apply'
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+
+jobs:
+  terraform:
+    name: 'Terraform Plan and Apply'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'Checkout GitHub repository'
+      uses: actions/checkout@v4
+
+    - name: 'Set up Google Cloud authentication'
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/946814556691/locations/global/workloadIdentityPools/terraform-pool/providers/network'
+        service_account: 'terraform-network@deft-apparatus-490107-c8.iam.gserviceaccount.com'
+
+    - name: 'Set up Terraform'
+      uses: hashicorp/setup-terraform@v2
+
+    - name: 'Terraform Init'
+      run: terraform init
+
+    # - name: 'Terraform Plan'
+    #   run: terraform plan -var-file=env/dev/terraform.tfvars
+
+    # Uncomment below if you want automatic apply
+    # - name: 'Terraform Apply'
+    #   run: terraform apply -var-file=env/dev/terraform.tfvars -auto-approve
+
+    # - name: 'Terraform Output'
+    #   run: terraform output
+
+    # if needs apply to be done on merging to main or push to main
+    # - name: 'Terraform Apply'
+    #   if: github.ref == 'refs/head/main' and github.event_name == 'push'
+    #   run: terraform apply -var-file=env/dev/terraform.tfvars -auto-approve
+    
