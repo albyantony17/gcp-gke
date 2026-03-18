@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket  = "terraform-state-gcp-gke"
+    bucket  = "my-tf-state-devc"
     prefix  = "gke/dev"
   }
 }
