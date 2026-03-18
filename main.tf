@@ -7,12 +7,12 @@ module "gke" {
   machine_type = var.machine_type
 }
  
-# Deploy Hello World app inside GKE
+# Hello World Deployment
 resource "kubernetes_deployment" "hello_app" {
   metadata { name = "hello-app" }
  
   spec {
-    replicas = 2
+    replicas = var.replicas
     selector { match_labels = { app = "hello" } }
  
     template {
@@ -20,18 +20,18 @@ resource "kubernetes_deployment" "hello_app" {
       spec {
         container {
           name  = "hello-container"
-          image = "gcr.io/google-samples/hello-app:1.0"
-          port { container_port = 8080 }
+          image = var.container_image
+          port { container_port = var.container_port }
         }
       }
     }
   }
 }
  
-# Expose app via LoadBalancer
-resource "kubernetes_service" "hello_service" {
+# ClusterIP Service (internal-only)
+resource "kubernetes_service" "hello_clusterip" {
   metadata {
-    name = "hello-service"
+    name = "hello-clusterip"
   }
 
   spec {
@@ -40,8 +40,31 @@ resource "kubernetes_service" "hello_service" {
     }
 
     port {
-      port        = 80
-      target_port = 8080
+      port        = var.clusterip_port
+      target_port = var.container_port
+    }
+
+    type = "ClusterIP"
+  }
+}
+ 
+# Internal LoadBalancer Service (accessible from VM in same VPC)
+resource "kubernetes_service" "hello_internal_lb" {
+  metadata {
+    name = "hello-internal-lb"
+    annotations = {
+      "cloud.google.com/load-balancer-type" = "Internal"
+    }
+  }
+
+  spec {
+    selector = {
+      app = "hello"
+    }
+
+    port {
+      port        = var.internal_lb_port
+      target_port = var.container_port
     }
 
     type = "LoadBalancer"
