@@ -6,67 +6,13 @@ module "gke" {
   node_count   = var.node_count
   machine_type = var.machine_type
 }
- 
-# Hello World Deployment
-resource "kubernetes_deployment" "hello_app" {
-  metadata { name = "hello-app" }
- 
-  spec {
-    replicas = var.replicas
-    selector { match_labels = { app = "hello" } }
- 
-    template {
-      metadata { labels = { app = "hello" } }
-      spec {
-        container {
-          name  = "hello-container"
-          image = var.container_image
-          port { container_port = var.container_port }
-        }
-      }
-    }
-  }
-}
- 
-# ClusterIP Service (internal-only)
-resource "kubernetes_service" "hello_clusterip" {
-  metadata {
-    name = "hello-clusterip"
-  }
 
-  spec {
-    selector = {
-      app = "hello"
-    }
+module "hello_app" {
+  source = "./modules/hello-app"
 
-    port {
-      port        = var.clusterip_port
-      target_port = var.container_port
-    }
-
-    type = "ClusterIP"
-  }
-}
- 
-# Internal LoadBalancer Service (accessible from VM in same VPC)
-resource "kubernetes_service" "hello_internal_lb" {
-  metadata {
-    name = "hello-internal-lb"
-    annotations = {
-      "cloud.google.com/load-balancer-type" = "Internal"
-    }
-  }
-
-  spec {
-    selector = {
-      app = "hello"
-    }
-
-    port {
-      port        = var.internal_lb_port
-      target_port = var.container_port
-    }
-
-    type = "LoadBalancer"
-  }
+  replicas          = var.replicas
+  container_image   = var.container_image
+  container_port    = var.container_port
+  clusterip_port    = var.clusterip_port
+  internal_lb_port  = var.internal_lb_port
 }
