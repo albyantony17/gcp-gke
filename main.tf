@@ -50,3 +50,29 @@ module "hello_app" {
   pvc_access_modes  = var.pvc_access_modes
   pv_reclaim_policy = var.pv_reclaim_policy
 }
+
+########################################
+# Linux VM
+########################################
+module "linux_vm" {
+  source = "./modules/compute-linux"
+
+  name         = var.linux_vm_name
+  zone         = var.linux_vm_zone
+  machine_type = var.linux_machine_type
+  disk_size_gb = var.linux_disk_size_gb
+  network      = var.network
+}
+
+########################################
+# Windows VM
+########################################
+module "windows_vm" {
+  source = "./modules/compute-windows"
+
+  name         = var.windows_vm_name
+  zone         = var.windows_vm_zone
+  machine_type = var.windows_machine_type
+  disk_size_gb = var.windows_disk_size_gb
+  network      = var.network
+}

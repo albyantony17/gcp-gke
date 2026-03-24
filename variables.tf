@@ -150,3 +150,58 @@ variable "pv_reclaim_policy" {
   description = "PersistentVolume reclaim policy"
   type        = string
 }
+
+########################################
+# Common network
+########################################
+variable "network" {
+  description = "VPC network name"
+  type        = string
+  default     = "default"
+}
+
+########################################
+# Linux VM variables
+########################################
+variable "linux_vm_name" {
+  description = "Linux VM name"
+  type        = string
+}
+
+variable "linux_vm_zone" {
+  description = "Zone for Linux VM"
+  type        = string
+}
+
+variable "linux_machine_type" {
+  description = "Machine type for Linux VM"
+  type        = string
+}
+
+variable "linux_disk_size_gb" {
+  description = "Boot disk size for Linux VM"
+  type        = number
+}
+
+########################################
+# Windows VM variables
+########################################
+variable "windows_vm_name" {
+  description = "Windows VM name"
+  type        = string
+}
+
+variable "windows_vm_zone" {
+  description = "Zone for Windows VM"
+  type        = string
+}
+
+variable "windows_machine_type" {
+  description = "Machine type for Windows VM"
+  type        = string
+}
+
+variable "windows_disk_size_gb" {
+  description = "Boot disk size for Windows VM"
+  type        = number
+}

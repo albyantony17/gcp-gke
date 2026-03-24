@@ -5,7 +5,6 @@
 project_id   = "deft-apparatus-490107-c8"
 region       = "asia-south1"
 cluster_name = "hello-gke-cluster"
-
 node_count   = 2
 machine_type = "e2-medium"
 
@@ -48,3 +47,24 @@ volume_name         = "hello-storage"
 pv_access_modes     = ["ReadWriteOnce"]
 pvc_access_modes    = ["ReadWriteOnce"]
 pv_reclaim_policy   = "Retain"
+
+########################################
+# Network
+########################################
+network = "default"
+
+########################################
+# Linux VM
+########################################
+linux_vm_name         = "linux-web"
+linux_vm_zone         = "asia-south1-a"
+linux_machine_type    = "e2-medium"
+linux_disk_size_gb    = 20
+
+########################################
+# Windows VM
+########################################
+windows_vm_name       = "windows-web"
+windows_vm_zone       = "asia-south1-a"
+windows_machine_type  = "e2-standard-2"
+windows_disk_size_gb  = 50
