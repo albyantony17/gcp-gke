@@ -205,3 +205,54 @@ variable "windows_disk_size_gb" {
   description = "Boot disk size for Windows VM"
   type        = number
 }
+########################################
+# Common
+########################################
+variable "zone" {
+  description = "GCP zone for resources"
+  type        = string
+}
+
+########################################
+# Instance Template
+########################################
+variable "template_name" {
+  description = "Name prefix for the instance template"
+  type        = string
+}
+
+variable "template_machine_type" {
+  description = "Machine type for template instances"
+  type        = string
+}
+
+variable "template_image" {
+  description = "Source image for the instance template"
+  type        = string
+}
+
+########################################
+# Managed Instance Group (MIG)
+########################################
+variable "mig_name" {
+  description = "Managed Instance Group name"
+  type        = string
+}
+
+variable "mig_min_replicas" {
+  description = "Minimum number of instances in the MIG"
+  type        = number
+}
+
+variable "mig_max_replicas" {
+  description = "Maximum number of instances in the MIG"
+  type        = number
+}
+
+########################################
+# Load Balancer
+########################################
+variable "lb_name" {
+  description = "External HTTP Load Balancer base name"
+  type        = string
+}

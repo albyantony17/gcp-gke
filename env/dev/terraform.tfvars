@@ -68,3 +68,27 @@ windows_vm_name       = "windows-web"
 windows_vm_zone       = "asia-south1-a"
 windows_machine_type  = "e2-standard-2"
 windows_disk_size_gb  = 50
+
+########################################
+# Common
+########################################
+zone    = "asia-south1-a"
+
+########################################
+# Instance Template
+########################################
+template_name          = "web-template"
+template_machine_type = "e2-medium"
+template_image        = "debian-cloud/debian-12"
+
+########################################
+# Managed Instance Group
+########################################
+mig_name          = "web-mig"
+mig_min_replicas  = 2
+mig_max_replicas  = 5
+
+########################################
+# Load Balancer
+########################################
+lb_name = "web-lb"

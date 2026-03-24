@@ -76,3 +76,31 @@ module "windows_vm" {
   disk_size_gb = var.windows_disk_size_gb
   network      = var.network
 }
+########################################
+# Instance Template
+########################################
+module "instance_template" {
+  source = "./modules/instance-template"
+
+  name         = var.template_name
+  machine_type = var.template_machine_type
+  image        = var.template_image
+  network      = var.network
+}
+
+########################################
+# Managed Instance Group (MIG)
+########################################
+module "mig" {
+  source = "./modules/mig"
+
+  name               = var.mig_name
+  zone               = var.zone
+  template_self_link = module.instance_template.self_link
+  min_replicas       = var.mig_min_replicas
+  max_replicas       = var.mig_max_replicas
+}
+
+########################################
+# External HTTP Load Balancer
+########################################
