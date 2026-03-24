@@ -215,7 +215,6 @@ variable "zone" {
 
 ########################################
 # Instance Template
-########################################
 variable "template_name" {
   description = "Name prefix for the instance template"
   type        = string
